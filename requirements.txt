@@ -1,0 +1,4 @@
+flask
+flask-mysqldb
+ping3
+gunicorn

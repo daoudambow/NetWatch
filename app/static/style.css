@@ -1,0 +1,70 @@
+/* Amélioration netteté et lisibilité sur fond sombre */
+body {
+  background: linear-gradient(135deg, #0f172a 0%, #0b1120 100%);
+  color: #f1f5f9; /* Gris clair plus lisible que #e2e8f0 */
+}
+
+h1, h2, h3 {
+  color: #ffffff; /* Blanc pur pour titres */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6); /* Légère ombre pour détacher du fond */
+}
+
+p, span, div, li, button {
+  color: #e2e8f0; /* Gris très clair pour texte normal */
+  font-weight: 400; /* Pas trop gras pour éviter le flou */
+}
+
+button {
+  background: linear-gradient(90deg, #3b82f6, #2563eb); /* Bleu plus vif */
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.5);
+}
+
+/* Zone de résultats scan */
+#scan-results {
+  background: rgba(15, 23, 42, 0.85); /* Fond plus sombre et opaque */
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px); /* Effet verre dépoli net */
+  -webkit-backdrop-filter: blur(8px);
+  color: #f1f5f9;
+}
+
+/* Boutons des plages IP */
+button[onclick^="launchScan"] {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  border: 1px solid #475569;
+  color: #e2e8f0;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button[onclick^="launchScan"]:hover {
+  background: linear-gradient(135deg, #334155, #475569);
+  border-color: #60a5fa;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(96, 165, 250, 0.3);
+}
+
+/* Évite le flou sur texte long */
+input, textarea {
+  color: #f1f5f9;
+  background: #1e293b;
+  border: 1px solid #475569;
+  font-family: 'Inter', sans-serif;
+}
+
+input:focus, textarea:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}

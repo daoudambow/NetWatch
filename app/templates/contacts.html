@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% set title = "Contacts & Support" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Titre principal -->
+    <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Contacts & Support
+        </h1>
+        <p class="mt-6 text-xl md:text-2xl text-gray-300">
+            Notre équipe est à votre disposition 24/7 pour toute question ou assistance
+        </p>
+    </div>
+
+    <!-- Cartes coordonnées + formulaire -->
+    <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Coordonnées de l'équipe -->
+        <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl p-12 border border-gray-700/50 shadow-2xl hover:shadow-blue-900/30 transition-all duration-500">
+            <h2 class="text-4xl font-bold mb-12 text-white flex items-center gap-6">
+                <i class="fas fa-headset text-5xl text-blue-500"></i>
+                Nos coordonnées
+            </h2>
+
+            <div class="space-y-10 text-xl">
+                <!-- Email -->
+                <div class="flex items-start gap-8">
+                    <div class="w-20 h-20 rounded-2xl bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-envelope text-4xl text-blue-400"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-200 text-2xl">Email</p>
+                        <a href="mailto:daoudambow2000@icloud.com" class="text-blue-400 hover:text-blue-300 transition text-3xl break-all">
+                            daoudambow2000@icloud.com
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Téléphone / WhatsApp -->
+                <div class="flex items-start gap-8">
+                    <div class="w-20 h-20 rounded-2xl bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                        <i class="fab fa-whatsapp text-4xl text-green-400"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-200 text-2xl">WhatsApp / Téléphone</p>
+                        <a href="https://wa.me/221771434837" class="text-green-400 hover:text-green-300 transition text-3xl">
+                            +221 77 143 48 37
+                        </a>
+                        <p class="text-gray-500 text-base mt-2">Réponse rapide via WhatsApp</p>
+                    </div>
+                </div>
+
+                <!-- Localisation -->
+                <div class="flex items-start gap-8">
+                    <div class="w-20 h-20 rounded-2xl bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-map-marker-alt text-4xl text-red-400"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-200 text-2xl">Localisation</p>
+                        <p class="text-gray-300 text-3xl">Dakar, Sénégal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire de contact -->
+        <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl p-12 border border-gray-700/50 shadow-2xl hover:shadow-purple-900/30 transition-all duration-500">
+            <h2 class="text-4xl font-bold mb-12 text-white flex items-center gap-6">
+                <i class="fas fa-paper-plane text-5xl text-purple-500"></i>
+                Envoyer un message
+            </h2>
+
+            <form method="POST" action="{{ url_for('contact_submit') }}" class="space-y-8">
+                <input type="text" name="name" placeholder="Votre nom complet" required class="w-full p-6 bg-gray-800/70 border border-gray-700 rounded-2xl focus:border-purple-500 text-white text-xl">
+                <input type="email" name="email" placeholder="Votre email" required class="w-full p-6 bg-gray-800/70 border border-gray-700 rounded-2xl focus:border-purple-500 text-white text-xl">
+                <input type="tel" name="phone" placeholder="Téléphone (optionnel)" class="w-full p-6 bg-gray-800/70 border border-gray-700 rounded-2xl focus:border-purple-500 text-white text-xl">
+                <textarea name="message" placeholder="Votre message ou demande..." rows="8" required class="w-full p-6 bg-gray-800/70 border border-gray-700 rounded-2xl focus:border-purple-500 text-white text-xl"></textarea>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-xl flex items-center justify-center gap-4">
+                    <i class="fas fa-paper-plane"></i> Envoyer le message
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Infos supplémentaires -->
+    <div class="mt-16 text-center text-gray-400 text-lg">
+        <p>Réponse garantie sous 24h</p>
+        <p class="mt-2">Support technique disponible 7j/7</p>
+    </div>
+</div>
+{% endblock %}

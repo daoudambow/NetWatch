@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% set title = "Scan Local du Réseau" %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto p-6">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Scan Local du Réseau
+        </h1>
+        <p class="mt-4 text-lg text-gray-300">
+            Trouvez les appareils connectés sur votre Wi-Fi actuel
+        </p>
+    </div>
+
+    <div class="bg-gray-900/70 rounded-2xl p-8 border border-gray-700 shadow-xl">
+        <p class="text-center text-xl text-yellow-300 mb-8 font-semibold">
+            Choisissez une plage d'adresses IP courante ou entrez la vôtre :
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
+            <button onclick="launchScan('192.168.1.')" class="bg-gradient-to-br from-blue-900/50 to-blue-700/50 hover:from-blue-800 hover:to-blue-600 p-6 rounded-xl text-white text-lg font-medium transition-all shadow-md hover:shadow-lg hover:scale-105">
+                192.168.1.1–254
+            </button>
+
+            <button onclick="launchScan('192.168.0.')" class="bg-gradient-to-br from-blue-900/50 to-blue-700/50 hover:from-blue-800 hover:to-blue-600 p-6 rounded-xl text-white text-lg font-medium transition-all shadow-md hover:shadow-lg hover:scale-105">
+                192.168.0.1–254
+            </button>
+
+            <button onclick="launchScan('192.168.43.')" class="bg-gradient-to-br from-blue-900/50 to-blue-700/50 hover:from-blue-800 hover:to-blue-600 p-6 rounded-xl text-white text-lg font-medium transition-all shadow-md hover:shadow-lg hover:scale-105">
+                192.168.43.1–254
+            </button>
+
+            <button onclick="launchScan('192.168.100.')" class="bg-gradient-to-br from-blue-900/50 to-blue-700/50 hover:from-blue-800 hover:to-blue-600 p-6 rounded-xl text-white text-lg font-medium transition-all shadow-md hover:shadow-lg hover:scale-105">
+                192.168.100.1–254
+            </button>
+
+            <button onclick="launchScan('10.0.0.')" class="bg-gradient-to-br from-blue-900/50 to-blue-700/50 hover:from-blue-800 hover:to-blue-600 p-6 rounded-xl text-white text-lg font-medium transition-all shadow-md hover:shadow-lg hover:scale-105">
+                10.0.0.1–254
+            </button>
+        </div>
+
+        <div class="text-center mb-8">
+            <label class="block text-gray-300 text-lg mb-3">
+                Ou entrez votre plage manuellement (ex : 192.168.1.)
+            </label>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+                <input id="customPrefix" placeholder="Ex : 192.168.1." class="flex-1 p-5 bg-gray-800 border border-gray-700 rounded-xl text-white text-lg focus:outline-none focus:border-cyan-500">
+                <button onclick="const val = document.getElementById('customPrefix').value.trim(); if(val) launchScan(val.endsWith('.') ? val : val + '.')" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-8 py-5 rounded-xl transition-all shadow-lg">
+                    Scanner
+                </button>
+            </div>
+        </div>
+
+        <div id="scan-results" class="min-h-[300px] bg-gray-950/60 rounded-xl p-8 border border-gray-800 mt-10 text-lg leading-relaxed">
+            <p class="text-center text-gray-400">
+                Cliquez sur une plage ci-dessus ou entrez la vôtre pour lancer le scan.
+            </p>
+            <p class="text-center text-sm text-gray-500 mt-4">
+                <strong>Astuce :</strong> Sur votre téléphone → Paramètres → Wi-Fi → votre réseau → regardez l'adresse IP (prenez les 3 premiers chiffres + un point à la fin).
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+function launchScan(prefix) {
+    const results = document.getElementById('scan-results');
+    if (!results) return;
+
+    results.innerHTML = `
+        <p class="text-2xl font-bold text-cyan-400 text-center mb-8 animate-pulse">
+            Scan en cours sur ${prefix}1–254...
+        </p>
+        <div class="text-center">
+            <i class="fas fa-spinner fa-spin text-6xl text-cyan-500"></i>
+        </div>
+    `;
+
+    const active = [];
+    let count = 0;
+
+    function checkIp(i) {
+        if (i > 254) {
+            finishScan(active);
+            return;
+        }
+
+        const ip = prefix + i;
+        fetch(`http://${ip}`, { mode: 'no-cors', cache: 'no-store' })
+            .then(() => {
+                active.push(ip);
+                results.innerHTML += `<p class="text-green-400">Actif : ${ip}</p>`;
+            })
+            .catch(() => {})
+            .finally(() => {
+                count++;
+                if (count % 20 === 0) {
+                    results.innerHTML += `<p class="text-gray-500 text-center">... ${count}/254</p>`;
+                }
+                setTimeout(() => checkIp(i + 1), 20);
+            });
+    }
+
+    function finishScan(active) {
+        if (active.length === 0) {
+            results.innerHTML += `
+                <p class="text-yellow-400 text-xl font-bold text-center mt-10">
+                    Aucun appareil détecté
+                </p>
+                <p class="text-gray-400 text-center mt-4">
+                    Les appareils trouvés n'ont peut-être pas de serveur web ouvert (ports 80/443 fermés).
+                </p>
+            `;
+        } else {
+            results.innerHTML += `
+                <p class="text-2xl font-bold text-cyan-400 text-center mt-10">
+                    ${active.length} appareils trouvés !
+                </p>
+                <p class="text-gray-300 text-center mt-4">
+                    Vous pouvez maintenant les ajouter au dashboard.
+                </p>
+            `;
+        }
+    }
+
+    checkIp(1);
+}
+</script>
+{% endblock %}

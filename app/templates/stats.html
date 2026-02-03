@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% set title = "Statistiques" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Statistiques & Performances
+        </h1>
+        <p class="mt-6 text-xl md:text-2xl text-gray-300">
+            Analyse détaillée de votre réseau en temps réel
+        </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-10">
+        <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl p-10 border border-gray-700/50 shadow-2xl text-center">
+            <div class="w-24 h-24 mx-auto mb-8 rounded-full bg-green-900/30 flex items-center justify-center">
+                <i class="fas fa-clock-rotate-left text-5xl text-green-400"></i>
+            </div>
+            <h3 class="text-3xl font-bold text-white mb-4">Disponibilité</h3>
+            <p class="text-7xl font-extrabold text-green-400">98.7%</p>
+            <p class="text-xl text-gray-400 mt-4">Moyenne sur 30 jours</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl p-10 border border-gray-700/50 shadow-2xl text-center">
+            <div class="w-24 h-24 mx-auto mb-8 rounded-full bg-cyan-900/30 flex items-center justify-center">
+                <i class="fas fa-stopwatch text-5xl text-cyan-400"></i>
+            </div>
+            <h3 class="text-3xl font-bold text-white mb-4">Latence moyenne</h3>
+            <p class="text-7xl font-extrabold text-cyan-400">42 ms</p>
+            <p class="text-xl text-gray-400 mt-4">Tous équipements</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-3xl p-10 border border-gray-700/50 shadow-2xl text-center">
+            <div class="w-24 h-24 mx-auto mb-8 rounded-full bg-purple-900/30 flex items-center justify-center">
+                <i class="fas fa-server text-5xl text-purple-400"></i>
+            </div>
+            <h3 class="text-3xl font-bold text-white mb-4">Appareils actifs</h3>
+            <p class="text-7xl font-extrabold text-purple-400">{{ equipements|length }}</p>
+            <p class="text-xl text-gray-400 mt-4">Surveillance actuelle</p>
+        </div>
+    </div>
+
+    <div class="mt-16 bg-gray-900 rounded-3xl p-12 border border-gray-700/50 text-center shadow-2xl">
+        <i class="fas fa-chart-line text-9xl text-gray-700 mb-10 opacity-40"></i>
+        <h3 class="text-4xl font-bold text-gray-300 mb-6">Graphiques interactifs</h3>
+        <p class="text-2xl text-gray-500">Historique des pings et alertes à venir</p>
+        <p class="mt-4 text-lg text-gray-600">(Intégration Chart.js ou Grafana prévue)</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20">
+    <div class="bg-gray-900 rounded-3xl shadow-2xl p-10 border border-gray-700">
+        <h1 class="text-4xl font-bold text-center text-white mb-10">Inscription</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="p-4 mb-6 rounded-xl {{ 'bg-green-600' if category == 'success' else 'bg-red-600' }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('register') }}" class="space-y-6">
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required class="w-full p-5 bg-gray-800 border border-gray-700 rounded-xl text-white">
+            <input type="email" name="email" placeholder="Email" required class="w-full p-5 bg-gray-800 border border-gray-700 rounded-xl text-white">
+            <input type="password" name="password" placeholder="Mot de passe" required class="w-full p-5 bg-gray-800 border border-gray-700 rounded-xl text-white">
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold p-5 rounded-xl shadow-lg transition-all">
+                Créer mon compte
+            </button>
+        </form>
+
+        <p class="text-center mt-8 text-gray-400">
+            Déjà inscrit ? <a href="{{ url_for('login') }}" class="text-blue-400 hover:text-blue-300">Se connecter</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
