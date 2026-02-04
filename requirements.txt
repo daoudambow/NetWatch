@@ -1,8 +1,10 @@
-flask
-flask-mysqldb
+Flask
+gunicorn
 ping3
 flask-login
 flask-bcrypt
 itsdangerous
 python-dotenv
 flask-mail
+pymysql
+

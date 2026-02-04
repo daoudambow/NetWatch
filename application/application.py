@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_mysqldb import MySQL
 import ping3
 from datetime import datetime
-from flask_mail import Mail, Message
 import os
 
 app = Flask(__name__)
@@ -10,20 +9,13 @@ app = Flask(__name__)
 # Clé secrète obligatoire pour les flash messages et sessions
 app.secret_key = 'netwatch_secret_key_daouda_2026_senegal_change_this_please'
 
-# Chargement de la configuration (config.py)
+# Chargement de la configuration depuis config.py
 app.config.from_pyfile('config.py')
 
-# Configuration email (à mettre dans config.py ou .env)
-app.config['MAIL_SERVER'] = 'smtp.mail.me.com'         # serveur iCloud
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'daoudambow2000@icloud.com'
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')  # mot de passe d'application iCloud
-
+# Initialisation de la connexion MySQL
 mysql = MySQL(app)
-mail = Mail(app)
 
-# Injecte l'année actuelle dans tous les templates
+# Injecte l'année actuelle dans tous les templates (pour le footer par exemple)
 @app.context_processor
 def inject_current_year():
     return dict(current_year=datetime.now().year)
@@ -97,7 +89,7 @@ def scan():
     return render_template('scan.html', active_tab='scan')
 
 
-# Route pour la page Contacts
+# Route pour la page Contacts (affichage)
 @app.route('/contacts')
 def contacts():
     return render_template('contacts.html', active_tab='contacts')
@@ -122,7 +114,7 @@ def contact_submit():
         recipients=['daoudambow2000@icloud.com']  # ton email
     )
     msg.body = f"""
-    Nouveau message reçu via le site NetWatch :
+    Nouveau message reçu via NetWatch :
 
     Nom       : {name}
     Email     : {email}
@@ -154,5 +146,4 @@ def settings():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5001)
